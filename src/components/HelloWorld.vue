@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import { useAxios } from "@/Axios/axiosIndex";
-import { onMounted } from "vue";
+import { useQuery } from "@vue/apollo-composable";
+import gql from "graphql-tag";
+import { watch } from "vue";
 
+const { result } = useQuery(gql`
+  query getUser {
+    user(id: 1) {
+      id
+      name
+    }
+  }
+`);
+watch(result, () => {
+  console.log("================== watched");
+  console.log(result.value);
+});
 defineProps<{
   msg: string;
 }>();
 console.log("========== working on it!!!!!!!");
-const t = () => {
-  useAxios.get("https://jsonplaceholder.typicode.com/posts/1").then((res) => {
-    console.log(res);
-  });
-};
-
-onMounted(async () => {
-  t();
-});
 </script>
 
 <template>
@@ -27,6 +31,7 @@ onMounted(async () => {
       What's next?
     </h3>
   </div>
+  <h2>Hello {{ result?.user?.name ?? "world" }}</h2>
 </template>
 
 <style scoped>
