@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, h, provide } from "vue";
 import { createPinia } from "pinia";
 
 import App from "./App.vue";
@@ -21,8 +21,15 @@ const apolloClient = new ApolloClient({
   cache,
 });
 
-const app = createApp(App);
-app.provide(DefaultApolloClient, apolloClient);
+// const app = createApp(App);
+// app.provide(DefaultApolloClient, apolloClient);
+const app = createApp({
+  setup() {
+    provide(DefaultApolloClient, apolloClient);
+  },
+
+  render: () => h(App),
+});
 app.use(createPinia());
 app.use(router);
 
