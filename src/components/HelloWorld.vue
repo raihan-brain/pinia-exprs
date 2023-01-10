@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { useQuery } from "@vue/apollo-composable";
-import gql from "graphql-tag";
-import { watch } from "vue";
+import { ref, watch } from "vue";
+import ALL_BOOKS_QUERY from "../graphql/allBooks.query.gql";
+const searchTerm = ref("");
+const { result } = useQuery(ALL_BOOKS_QUERY, () => ({
+  search: searchTerm.value,
+}));
 
-const { result } = useQuery(gql`
-  query getUser {
-    user(id: 1) {
-      id
-      name
-    }
-  }
-`);
 watch(result, () => {
-  console.log("================== watched");
-  console.log(result.value);
+  console.log("==== watched");
+  console.log(result.value.allBooks);
 });
+
 defineProps<{
   msg: string;
 }>();
@@ -31,7 +28,12 @@ console.log("========== working on it!!!!!!!");
       What's next?
     </h3>
   </div>
-  <h2>Hello {{ result?.user?.name ?? "world" }}</h2>
+  <div>
+    <input type="text" v-model="searchTerm" />
+    <p v-for="book in result?.allBooks" :key="book.id">
+      {{ book.title }}
+    </p>
+  </div>
 </template>
 
 <style scoped>

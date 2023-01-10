@@ -13,7 +13,7 @@ import {
 import { DefaultApolloClient } from "@vue/apollo-composable";
 
 const httpLink = createHttpLink({
-  uri: "https://graphqlzero.almansi.me/api",
+  uri: "http://localhost:4000/graphql",
 });
 const cache = new InMemoryCache();
 const apolloClient = new ApolloClient({
