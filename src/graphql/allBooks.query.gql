@@ -3,5 +3,7 @@
       id
       title
       description
+      author
+      rating
     }
   }
