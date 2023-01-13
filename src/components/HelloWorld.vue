@@ -26,7 +26,15 @@ watch(books, () => {
   console.log("=== books", books);
 });
 
-const activeBook = ref(null);
+const activeBook = ref<
+  Partial<{
+    id: string;
+    title: string;
+    description: string;
+    author: string;
+    rating: number;
+  }>
+>();
 
 defineProps<{
   msg: string;
@@ -50,9 +58,9 @@ defineProps<{
     <template v-else>
       <p v-if="activeBook">
         <EditBookRating
-          :initial-rating="activeBook.rating"
-          :book-id="activeBook.id"
-          @close-form="activeBook = null"
+          :initial-rating="activeBook?.rating"
+          :book-id="activeBook?.id"
+          @close-form="activeBook = {}"
         ></EditBookRating>
       </p>
       <template v-else>

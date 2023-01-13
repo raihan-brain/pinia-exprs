@@ -2,13 +2,14 @@
 import { ref } from "vue";
 import UPDATE_BOOK_MUTATION from "../graphql/updateBook.mutation.gql";
 import { useMutation } from "@vue/apollo-composable";
+import type { PropType } from "vue";
 const props = defineProps({
   initialRating: {
-    type: Number,
+    type: Object as PropType<number | undefined>,
     required: true,
   },
   bookId: {
-    type: String,
+    type: Object as PropType<string | undefined>,
     required: true,
   },
 });
@@ -22,24 +23,22 @@ const emit = defineEmits<{ (e: "closeForm"): void }>();
 
 const rating = ref(props.initialRating);
 
-const {
-  mutate: updateRating,
-  onDone,
-  loading,
-  error,
-} = useMutation(UPDATE_BOOK_MUTATION, () => ({
-  variables: {
-    id: props.bookId,
-    rating: parseFloat(rating.value as unknown as string),
-  },
-}));
+const { mutate, onDone, loading, error } = useMutation(
+  UPDATE_BOOK_MUTATION,
+  () => ({
+    variables: {
+      id: props.bookId,
+      rating: parseFloat(rating.value as unknown as string),
+    },
+  })
+);
 
-// const updateRating = () => {
-//   mutate();
-//   console.log(rating.value);
-//   // parseFloat(rating.value);
-//   emit("closeForm");
-// };
+const updateRating = () => {
+  mutate();
+  console.log(rating.value);
+  // parseFloat(rating.value);
+  emit("closeForm");
+};
 onDone(() => {
   emit("closeForm");
 });
