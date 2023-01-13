@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import UPDATE_BOOK_MUTATION from "../graphql/updateBook.mutation.gql";
+import UPDATE_BOOK_MUTATION from "../graphql/updateBook.graphql";
 import { useMutation } from "@vue/apollo-composable";
 import type { PropType } from "vue";
 const props = defineProps({

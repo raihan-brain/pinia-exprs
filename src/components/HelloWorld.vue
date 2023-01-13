@@ -2,7 +2,7 @@
 import EditBookRating from "@/components/EditBookRating.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { computed, ref, watch } from "vue";
-import ALL_BOOKS_QUERY from "../graphql/allBooks.query.gql";
+import ALL_BOOKS_QUERY from "../graphql/allBooks.graphql";
 const searchTerm = ref("");
 
 const { result, loading, error } = useQuery(
