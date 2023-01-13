@@ -2,22 +2,22 @@
 import { ref } from "vue";
 import UPDATE_BOOK_MUTATION from "../graphql/updateBook.graphql";
 import { useMutation } from "@vue/apollo-composable";
-import type { PropType } from "vue";
-const props = defineProps({
-  initialRating: {
-    type: Object as PropType<number | undefined>,
-    required: true,
-  },
-  bookId: {
-    type: Object as PropType<string | undefined>,
-    required: true,
-  },
-});
 
-// const props = defineProps<{
-//   initialRating: number;
-//   bookId: string;
-// }>();
+// const props = defineProps({
+//   initialRating: {
+//     type: Number,
+//     required: true,
+//   },
+//   bookId: {
+//     type: String,
+//     required: true,
+//   },
+// });
+
+const props = defineProps<{
+  initialRating?: number;
+  bookId?: string;
+}>();
 
 const emit = defineEmits<{ (e: "closeForm"): void }>();
 
@@ -45,6 +45,7 @@ onDone(() => {
 </script>
 
 <template>
+  <h1>Book id: {{ bookId }}</h1>
   <input
     type="text"
     v-model="rating"

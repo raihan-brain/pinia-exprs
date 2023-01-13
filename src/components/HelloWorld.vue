@@ -3,6 +3,7 @@ import EditBookRating from "@/components/EditBookRating.vue";
 import { useQuery } from "@vue/apollo-composable";
 import { computed, ref, watch } from "vue";
 import ALL_BOOKS_QUERY from "../graphql/allBooks.graphql";
+import type { BookType } from "@/components/types/bookType";
 const searchTerm = ref("");
 
 const { result, loading, error } = useQuery(
@@ -26,15 +27,7 @@ watch(books, () => {
   console.log("=== books", books);
 });
 
-const activeBook = ref<
-  Partial<{
-    id: string;
-    title: string;
-    description: string;
-    author: string;
-    rating: number;
-  }>
->();
+const activeBook = ref<Partial<BookType | null>>();
 
 defineProps<{
   msg: string;
@@ -60,7 +53,7 @@ defineProps<{
         <EditBookRating
           :initial-rating="activeBook?.rating"
           :book-id="activeBook?.id"
-          @close-form="activeBook = {}"
+          @close-form="activeBook = null"
         ></EditBookRating>
       </p>
       <template v-else>
