@@ -4,6 +4,7 @@ import { useQuery } from "@vue/apollo-composable";
 import { computed, ref, watch } from "vue";
 import ALL_BOOKS_QUERY from "../graphql/allBooks.graphql";
 import type { BookType } from "@/components/types/bookType";
+import AddBook from "@/components/AddBook.vue";
 const searchTerm = ref("");
 
 const { result, loading, error } = useQuery(
@@ -28,6 +29,7 @@ watch(books, () => {
 });
 
 const activeBook = ref<Partial<BookType | null>>();
+const showNewBookForm = ref(false);
 
 defineProps<{
   msg: string;
@@ -45,6 +47,17 @@ defineProps<{
     </h3>
   </div>
   <div>
+    <div>
+      <button v-if="!showNewBookForm" @click="showNewBookForm = true">
+        Add a new book
+      </button>
+
+      <AddBook
+        v-if="showNewBookForm"
+        @close-form="showNewBookForm = false"
+        :search-term="searchTerm"
+      ></AddBook>
+    </div>
     <input type="text" v-model="searchTerm" />
     <p v-if="loading">loading search ....</p>
     <p v-else-if="error">Something went wrong! Please try again.</p>
