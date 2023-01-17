@@ -5,6 +5,7 @@ import { computed, ref, watch } from "vue";
 import ALL_BOOKS_QUERY from "../graphql/allBooks.graphql";
 import type { BookType } from "@/components/types/bookType";
 import AddBook from "@/components/AddBook.vue";
+
 const searchTerm = ref("");
 
 const { result, loading, error } = useQuery(
@@ -27,6 +28,8 @@ watch(result, () => {
 watch(books, () => {
   console.log("=== books", books);
 });
+
+console.log("==== env " + import.meta.env.MODE);
 
 const activeBook = ref<Partial<BookType | null>>();
 const showNewBookForm = ref(false);
