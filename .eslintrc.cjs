@@ -13,12 +13,12 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "prettier"],
   rules: {
-    "max-len": [
-      "warn",
-      {
-        code: 80,
-      },
-    ],
+    // "max-len": [
+    //   "warn",
+    //   {
+    //     code: 80,
+    //   },
+    // ],
     "no-var": "error",
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
