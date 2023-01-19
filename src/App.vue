@@ -10,13 +10,15 @@ import { RouterView } from "vue-router";
         <div
           class="h-16 border-b border-gray-300/40 dark:border-gray-700"
         ></div>
-        <div
-          class="h-96 flex justify-center items-center rounded-2xl border border-dashed border-gray-300/40 dark:border-gray-700"
-        >
-          <span class="text-gray-500 dark:text-gray-200"> Content </span>
+        <div class="px-6 lg:px-12">
+          <div
+            class="h-96 flex justify-center items-center rounded-2xl border border-dashed border-gray-300/40 dark:border-gray-700"
+          >
+            <!--            <span class="text-gray-500 dark:text-gray-200"> Content </span>-->
+            <RouterView />
+          </div>
         </div>
       </div>
-      <RouterView />
     </main>
   </body>
 </template>
