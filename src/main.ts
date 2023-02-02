@@ -11,6 +11,7 @@ import {
   InMemoryCache,
 } from "@apollo/client/core";
 import { DefaultApolloClient } from "@vue/apollo-composable";
+import { createAuth0 } from "@auth0/auth0-vue";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -32,5 +33,14 @@ const app = createApp({
 });
 app.use(createPinia());
 app.use(router);
+app.use(
+  createAuth0({
+    domain: "ferdia.eu.auth0.com",
+    clientId: "7KY8WMfAWpHLDp85HIpY0LroDaOa1XLe",
+    authorizationParams: {
+      redirect_uri: window.location.origin,
+    },
+  })
+);
 
 app.mount("#app");

@@ -5,6 +5,10 @@ import { computed, ref, watch } from "vue";
 import ALL_BOOKS_QUERY from "../graphql/allBooks.graphql";
 import type { BookType } from "@/components/types/bookType";
 import AddBook from "@/components/AddBook.vue";
+import { useAuth0 } from "@auth0/auth0-vue";
+
+import WelcomeItem from "@/components/WelcomeItem.vue";
+const { loginWithRedirect, user, isAuthenticated } = useAuth0();
 
 const searchTerm = ref("");
 
@@ -33,6 +37,9 @@ console.log("==== env " + import.meta.env.MODE);
 
 const activeBook = ref<Partial<BookType | null>>();
 const showNewBookForm = ref(false);
+const login = () => {
+  loginWithRedirect();
+};
 
 defineProps<{
   msg: string;
@@ -70,5 +77,13 @@ defineProps<{
         </p>
       </template>
     </template>
+  </div>
+  <div>
+    <WelcomeItem>
+      <button @click="login">Login</button>
+      <h2>working on displaying user details</h2>
+      <p>User: {{ user }}</p>
+      <p>Authenticated: {{ isAuthenticated }}</p>
+    </WelcomeItem>
   </div>
 </template>
