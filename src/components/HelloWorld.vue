@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import EditBookRating from "@/components/EditBookRating.vue";
 import { useQuery } from "@vue/apollo-composable";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import ALL_BOOKS_QUERY from "../graphql/allBooks.graphql";
 import type { BookType } from "@/components/types/bookType";
 import AddBook from "@/components/AddBook.vue";
@@ -9,6 +9,21 @@ import { useAuth0 } from "@auth0/auth0-vue";
 
 import WelcomeItem from "@/components/WelcomeItem.vue";
 const { loginWithRedirect, user, isAuthenticated } = useAuth0();
+
+onMounted(async () => {
+  if (localStorage.getItem("isLoggedIn") === "1") {
+    return;
+  }
+  await loginWithRedirect();
+  localStorage.setItem("isLoggedIn", "1");
+});
+
+const computedUser = computed(() => user.value);
+
+watch(computedUser, (newValue) => {
+  console.log("computed user ");
+  console.log(newValue);
+});
 
 const searchTerm = ref("");
 
